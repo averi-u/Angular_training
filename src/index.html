@@ -1,13 +1,247 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>AngularTraining</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="utf-8" />
+  <title>AI Edu Tool — Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <base href="/" />
+
+  <!-- Minimal, app-embeddable CSS -->
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --card: #11151f;
+      --muted: #9aa4b2;
+      --text: #e6e9ef;
+      --accent: #7c5cff;
+      --accent-2: #00c2a8;
+      --border: #222838;
+      --good: #31d0aa;
+      --warn: #ffb020;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin:0; height:100%; background:var(--bg); color:var(--text); font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+    a { color: var(--accent); text-decoration: none; }
+    .container { max-width: 1080px; margin: 0 auto; padding: 24px; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding: 8px 0 20px; }
+    .logo { font-weight:700; letter-spacing:.3px; font-size:18px; }
+    .pill { padding:8px 14px; border:1px solid var(--border); border-radius:999px; color:var(--text); background:linear-gradient(180deg, #131827, #0f1320); }
+    .cta { background: var(--accent); border: 0; color: white; padding: 10px 16px; border-radius: 10px; font-weight: 600; box-shadow: 0 8px 24px rgba(124,92,255,.25); }
+    .cta:active { transform: translateY(1px); }
+    .hero { display:grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: stretch; }
+    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+    .card { background: var(--card); border:1px solid var(--border); border-radius: 14px; padding:18px; }
+    h1 { font-size: 28px; line-height:1.2; margin: 0 0 10px; }
+    h2 { font-size: 16px; margin: 0 0 8px; }
+    .muted { color: var(--muted); }
+    .grid { display:grid; gap: 16px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 900px) { .grid.cols-3 { grid-template-columns: 1fr; } }
+    .kpi { display:flex; justify-content: space-between; align-items: center; font-weight:600; }
+    .bar { height: 8px; border-radius: 999px; background: #1a2030; overflow: hidden; }
+    .bar > span { display:block; height:100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); width: var(--w,0%); }
+    .tag { display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border:1px solid var(--border); border-radius: 999px; color:var(--muted); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+    .row { display:flex; gap: 10px; flex-wrap: wrap; }
+    .btn { border:1px solid var(--border); background:#121723; color:var(--text); padding:8px 12px; border-radius:10px; }
+    .badge { font-size:12px; padding:4px 8px; border-radius:999px; background:#121723; color: var(--muted); border:1px solid var(--border)}
+    .table { width:100%; border-collapse: collapse; }
+    .table th, .table td { padding:10px; border-bottom:1px solid var(--border); text-align:left; }
+    footer { opacity:.7; margin: 28px 0 12px; }
+    .heat { display:grid; gap:8px; }
+    .heat .step { background:#0f1422; border:1px dashed #1f2740; border-radius:10px; padding:10px; }
+    .dot { display:inline-block; width:8px; height:8px; border-radius:50%; background: var(--warn); margin-right:8px; vertical-align:middle;}
+    .dot.good { background: var(--good); }
+    .small { font-size:12px; }
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+  <!-- Angular mounts here; the static content doubles as a skeleton/preview -->
+  <app-root>
+    <div class="container">
+      <header>
+        <div class="row" style="align-items:center">
+          <div class="logo">AIEdu<span class="muted">.demo</span></div>
+          <span class="badge">AI Tutoring</span>
+          <span class="badge">AI Notability</span>
+          <span class="badge">Analytics</span>
+        </div>
+        <div class="row">
+          <a class="pill" href="#" aria-label="Docs">Docs</a>
+          <button class="cta">Start Free Trial</button>
+        </div>
+      </header>
+
+      <!-- HERO: pitch + live-ish mock -->
+      <section class="hero">
+        <!-- Pitch -->
+        <div class="card">
+          <h1>Personalized practice powered by <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent">AI Notability</span></h1>
+          <p class="muted">We measure which parts of each problem take you longest, then recommend <strong>more of the right problems</strong>—and fewer of the ones you breeze through. Add <strong>AI Tutoring</strong> and <strong>AI-generated annotations</strong> for step-wise guidance.</p>
+
+          <div class="grid" style="margin-top:14px">
+            <div class="row">
+              <span class="tag">⏱️ Time-on-step tracking</span>
+              <span class="tag">🧠 Adaptive problem feed</span>
+              <span class="tag">🤖 AI hints &amp; Socratic Qs</span>
+              <span class="tag">📝 Smart annotations</span>
+            </div>
+
+            <!-- KPIs -->
+            <div class="grid cols-3">
+              <div class="card">
+                <div class="kpi">Mastery Velocity <span>+34%</span></div>
+                <div class="bar" aria-label="Mastery Velocity"><span style="--w:64%"></span></div>
+                <div class="small muted">vs. control after 2 weeks</div>
+              </div>
+              <div class="card">
+                <div class="kpi">Avg. Time Saved <span>11m / day</span></div>
+                <div class="bar" aria-label="Avg. Time Saved"><span style="--w:55%"></span></div>
+                <div class="small muted">fewer mismatched problems</div>
+              </div>
+              <div class="card">
+                <div class="kpi">Hint Acceptance <span>72%</span></div>
+                <div class="bar" aria-label="Hint Acceptance"><span style="--w:72%"></span></div>
+                <div class="small muted">AI tutoring sessions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live-ish mock: Problem + Notability heatmap + recs -->
+        <div class="card">
+          <h2>Problem Work Area</h2>
+          <p class="muted small">AI measures your time per step; longer steps glow “hotter.”</p>
+
+          <div class="heat" id="ai-notability-heatmap" data-component="ai-notability">
+            <div class="step" data-step="1" data-time-seconds="24">
+              <div><span class="dot good"></span><strong>Step 1:</strong> Identify function &amp; domain</div>
+              <div class="bar" style="margin-top:8px"><span style="--w:25%"></span></div>
+              <div class="small muted">24s spent · quick</div>
+            </div>
+            <div class="step" data-step="2" data-time-seconds="103">
+              <div><span class="dot"></span><strong>Step 2:</strong> Algebraic manipulation</div>
+              <div class="bar" style="margin-top:8px"><span style="--w:78%"></span></div>
+              <div class="small muted">1m 43s · needs practice</div>
+            </div>
+            <div class="step" data-step="3" data-time-seconds="68">
+              <div><span class="dot"></span><strong>Step 3:</strong> Apply limit rules</div>
+              <div class="bar" style="margin-top:8px"><span style="--w:52%"></span></div>
+              <div class="small muted">68s · moderate</div>
+            </div>
+          </div>
+
+          <div class="grid" style="margin-top:14px">
+            <div class="card">
+              <h2>Recommendations</h2>
+              <p class="muted small">Based on your time-on-step profile</p>
+              <ul>
+                <li>📚 <strong>More like:</strong> Limits with algebraic manipulation (hot)</li>
+                <li>📚 <strong>More like:</strong> Factorization &amp; cancellation practice</li>
+                <li>🚫 <strong>Fewer:</strong> Domain identification warm-ups (you’re fast here)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h2>AI Tutoring (inline)</h2>
+              <p class="muted small">Socratic, step-aware hints</p>
+              <div class="mono" style="font-size:12.5px; background:#0f1422; border:1px solid var(--border); padding:10px; border-radius:10px">
+                Tutor: What rule could simplify <em>both</em> numerator and denominator?<br/>
+                You: Maybe factor?<br/>
+                Tutor: Good start. Which factor appears in both parts after expanding?
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics: Highest Clicks / Reading Sections / Annotations -->
+      <section class="grid" style="margin-top:22px">
+        <div class="card">
+          <h2>Engagement Analytics</h2>
+          <p class="muted small">Highest Clicks · Reading Sections · Annotations</p>
+
+          <div class="grid cols-3">
+            <div>
+              <h3 style="margin:0 0 6px">Highest Clicks</h3>
+              <table class="table" id="highest-clicks" data-component="engagement-clicks">
+                <thead><tr><th>Element</th><th>Clicks</th></tr></thead>
+                <tbody>
+                  <tr><td>“Show Hint 1”</td><td>142</td></tr>
+                  <tr><td>“Similar Problems”</td><td>97</td></tr>
+                  <tr><td>“See Solution”</td><td>63</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <h3 style="margin:0 0 6px">Reading Sections</h3>
+              <table class="table" id="reading-sections" data-component="engagement-reading">
+                <thead><tr><th>Section</th><th>Dwell Time</th></tr></thead>
+                <tbody>
+                  <tr><td>Limit Laws Reference</td><td>4m 12s</td></tr>
+                  <tr><td>Factorization Examples</td><td>3m 08s</td></tr>
+                  <tr><td>Indeterminate Forms</td><td>2m 15s</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <h3 style="margin:0 0 6px">Annotations</h3>
+              <div class="grid">
+                <div class="row" style="justify-content:space-between">
+                  <span>AI-generated summary (Lesson 3)</span><span class="badge">126 views</span>
+                </div>
+                <div class="bar"><span style="--w:70%"></span></div>
+
+                <div class="row" style="justify-content:space-between">
+                  <span>User highlight: “L’Hôpital cues”</span><span class="badge">88 views</span>
+                </div>
+                <div class="bar"><span style="--w:48%"></span></div>
+
+                <div class="row" style="justify-content:space-between">
+                  <span>AI-note: “When to factor vs. expand”</span><span class="badge">63 views</span>
+                </div>
+                <div class="bar"><span style="--w:36%"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder cards you can replace with Angular components later -->
+        <div class="card">
+          <h2>AI-Generated Annotations (preview)</h2>
+          <div class="mono small" id="ai-annotations" data-component="ai-annotations">
+            • Key Idea: Prefer factoring before applying L’Hôpital when algebraic simplification is possible.<br/>
+            • Watch-out: Cancel only after confirming factor non-zero in domain.<br/>
+            • Quick Recall: (a² − b²) = (a − b)(a + b).
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Session Summary</h2>
+          <ul class="small">
+            <li>Problems solved: <strong>12</strong> (8 easy, 3 medium, 1 hard)</li>
+            <li>Avg. time/step: <strong>31s</strong> · Longest step: <strong>Algebraic manipulation</strong></li>
+            <li>Next up: <strong>Targeted practice set</strong> on manipulation &amp; limits (10 items)</li>
+          </ul>
+          <div class="row">
+            <button class="btn">Generate Next Set</button>
+            <button class="btn">Review Hot Steps</button>
+            <button class="btn">Export Notes</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="container small">
+        <span class="muted">© AIEdu Demo • Built for Angular — replace these cards with your components as you wire up data.</span>
+      </footer>
+    </div>
+  </app-root>
+
+  <!-- (Optional) tiny script just to demonstrate progress bars if you ever want to animate -->
+  <script>
+    // Reserved for Angular bootstrapping or small demo effects
+    // Example: document.querySelectorAll('.bar > span').forEach(el => el.style.transition = 'width .8s ease');
+  </script>
 </body>
 </html>
