@@ -19,3 +19,6 @@ bootstrapApplication(AppComponent, {
     provideFirestore(() => getFirestore()),
   ],
 }).catch(console.error);
+
+const auth = getAuth(app);
+
